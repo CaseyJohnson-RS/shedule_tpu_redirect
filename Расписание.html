@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Перенаправление на расписание</title>
+    <script>
+
+function weeksSinceFirstMondayOfSeptember(year) {
+  // 1. Получаем первый понедельник сентября указанного года (логика такая же, как и раньше).
+  const septemberFirst = new Date(year, 8, 1);
+  let dayOfWeek = septemberFirst.getDay();
+  let daysToAdd = 0;
+
+  if (dayOfWeek === 0) {
+    daysToAdd = 1;
+  } else if (dayOfWeek > 1) {
+    daysToAdd = 8 - dayOfWeek;
+  }
+
+  const firstMonday = new Date(year, 8, 1 + daysToAdd);
+
+  // 2. Получаем текущую дату.
+  const today = new Date();
+
+  // 3. Вычисляем разницу в миллисекундах между текущей датой и первым понедельником.
+  const timeDiff = today.getTime() - firstMonday.getTime();
+
+  // 4. Переводим миллисекунды в недели.
+  const weeksPassed = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000)); // 7 дней * 24 часа * 60 минут * 60 секунд * 1000 миллисекунд
+
+  return weeksPassed + 1;
+}
+
+// 2024/28/view.html
+let url = "https://rasp.tpu.ru/gruppa_39207/"
+
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth() + 1;
+
+if (month >= 6)
+{
+    url += (year).toString() + "/" + weeksSinceFirstMondayOfSeptember(year) + "/" + "view.html";
+}
+else 
+{
+    url += (year - 1).toString() + "/" + weeksSinceFirstMondayOfSeptember(year - 1) + "/" + "view.html";
+
+}
+
+window.open(url);
+console.log("sdfdsf");
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
