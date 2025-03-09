@@ -6,6 +6,18 @@
     <title>Перенаправление на расписание</title>
     <script>
 
+function getUrlParameters(url) {
+  const urlParams = new URLSearchParams(url.split('?')[1]); // Создаем объект URLSearchParams
+
+  const params = {}; // Объект для хранения параметров
+
+  for (const [key, value] of urlParams) {
+    params[key] = value; // Заполняем объект params парами ключ-значение
+  }
+
+  return params;
+}
+
 function weeksSinceFirstMondayOfSeptember(year) {
   // 1. Получаем первый понедельник сентября указанного года (логика такая же, как и раньше).
   const septemberFirst = new Date(year, 8, 1);
@@ -32,8 +44,15 @@ function weeksSinceFirstMondayOfSeptember(year) {
   return weeksPassed + 1;
 }
 
+
+
 // 2024/28/view.html
-let url = "https://rasp.tpu.ru/gruppa_39207/"
+let url = "https://rasp.tpu.ru/gruppa_"
+
+const current_url = window.location.href;
+const params = getUrlParameters(current_url);
+
+url += params.group.toString() + "/";
 
 const today = new Date();
 const year = today.getFullYear();
